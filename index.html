@@ -315,8 +315,7 @@ map.addSource('points', {
 'type': 'Feature',
 'properties': {
 'description':
-'<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant" target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>',
-'icon': 'theatre'
+'<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant" target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>'
 },
 'geometry': {
 'type': 'Point',
@@ -329,12 +328,24 @@ map.addSource('points', {
 'type': 'Feature',
 'properties': {
 'description':
-'<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant" target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>',
-'icon': 'theatre'
+'<strong>Seersucker Bike Ride and Social</strong><p>Feeling dandy? Get fancy, grab your bike, and take part in this year\'s <a href="http://dandiesandquaintrelles.com/2012/04/the-seersucker-social-is-set-for-june-9th-save-the-date-and-start-planning-your-look/" target="_blank" title="Opens in a new window">Seersucker Social</a> bike ride from Dandies and Quaintrelles. After the ride enjoy a lawn party at Hillwood with jazz, cocktails, paper hat-making, and more. 11:00-7:00 p.m.</p>'
 },
 'geometry': {
 'type': 'Point',
-'coordinates': [-77.038659, 38.931567]
+'coordinates': [-77.052477, 38.943951]
+}
+},
+
+
+{
+'type': 'Feature',
+'properties': {
+'description':
+'<strong>Capital Pride Parade</strong><p>The annual <a href="http://www.capitalpride.org/parade" target="_blank" title="Opens in a new window">Capital Pride Parade</a> makes its way through Dupont this Saturday. 4:30 p.m. Free.</p>'
+},
+'geometry': {
+'type': 'Point',
+'coordinates': [-77.043444, 38.909664]
 }
 }
 	
@@ -351,13 +362,11 @@ map.addLayer({
 }
 	});
 
+	
 map.on('click', 'points', function(e) {
 var coordinates = e.features[0].geometry.coordinates.slice();
 var description = e.features[0].properties.description;
- 
-// Ensure that if the map is zoomed out such that multiple
-// copies of the feature are visible, the popup appears
-// over the copy being pointed to.
+
 while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
 }
@@ -368,12 +377,11 @@ new mapboxgl.Popup()
 .addTo(map);
 });
  
-// Change the cursor to a pointer when the mouse is over the places layer.
+
 map.on('mouseenter', 'points', function() {
 map.getCanvas().style.cursor = 'pointer';
 });
  
-// Change it back to a pointer when it leaves.
 map.on('mouseleave', 'points', function() {
 map.getCanvas().style.cursor = '';
 });
