@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
-from server.availability.models import POI, Availability, Features
+from availability.models import POI, Availability, Features
 
 
 def list_POIs(request):
@@ -19,7 +19,7 @@ def list_POIs(request):
 
 def get_availability(request, pk):
     return JsonResponse({
-        'data': [availability.to_dict() for availability in Availability.objects.get(poi=pk)],
+        'data': [availability.to_dict() for availability in Availability.objects.filter(poi=pk)],
     })
 
 
@@ -59,7 +59,7 @@ def create_availability(request):
     schedule = data.get('schedule')
     challenge = data.get('challenge')
 
-    availability = Availability(did=did, poi=poi, space=space, status=status, schedule=schedule,
+    availability = Availability(did=did, poi_id=poi, space=space, schedule=schedule,
                                 challenge=challenge)
     availability.save()
 

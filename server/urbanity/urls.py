@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, re_path
 
-from server.availability.views import create_POI, create_availability, create_feature, get_feature, get_availability, \
+from availability.views import create_POI, create_availability, create_feature, get_feature, get_availability, \
     list_POIs
 
 urlpatterns = [

@@ -30,14 +30,14 @@ class Availability(models.Model):
         ('active', 'active'),
         ('challenged', 'challenged'),
     )
-    poi = models.ForeigKey(POI)
+    poi = models.ForeignKey(POI, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     space = models.CharField(max_length=200, default="")
     did = models.CharField(max_length=200, default="")
     status = models.CharField(max_length=200, choices=STATUS, default='active')
     schedule = JSONField(default=dict())
-    challenge = models.ForeigKey('availability.Availability', null=True, blank=True)
+    challenge = models.ForeignKey('availability.Availability', null=True, blank=True, on_delete=models.SET_NULL)
 
     @property
     def status(self):
@@ -49,9 +49,8 @@ class Availability(models.Model):
             "poi": self.poi.to_dict(),
             "space": self.space,
             "did": self.did,
-            "info": self.info,
-            "schedule": self.status,
-            "challenge": self.challenge.id
+            "schedule": self.schedule,
+            "challenge": self.challenge.id if self.challenge else None
         }
 
 
@@ -61,14 +60,14 @@ class Features(models.Model):
         ('challenged', 'challenged'),
     )
 
-    poi = models.ForeigKey(POI)
+    poi = models.ForeignKey(POI, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     space = models.CharField(max_length=200, default="")
     did = models.CharField(max_length=200, default="")
     info = JSONField(default=dict())
     status = models.CharField(max_length=200, choices=STATUS, default='active')
-    challenge = models.ForeigKey('availability.Features', null=True, blank=True)
+    challenge = models.ForeignKey('availability.Features', null=True, blank=True, on_delete=models.SET_NULL)
 
     def to_dict(self):
         return {
