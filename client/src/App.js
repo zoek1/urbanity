@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {
   Switch,
@@ -7,11 +6,7 @@ import {
   withRouter, Link
 } from 'react-router-dom';
 import Box from '3box';
-import Login from "./components/Login";
-import Chat from "./components/Chat";
-import NewThread from "./components/NewThread";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import ForumHome from "./components/ForumHome";
 import * as axios from "axios";
 import {getListings} from "./libs/foam";
 import Web3 from "web3";
@@ -25,7 +20,6 @@ import makeBlockie from "ethereum-blockies-base64";
 import {shortenEthAddr} from "./libs/3box-comments-react/src/utils";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const firey = require('./assets/firey.png');
 
 const BOX_SPACE = 'firey';
 const LIST_THREADS_CACHE = '/api/v0/threads/';
@@ -125,12 +119,9 @@ function App(props) {
         <Toolbar style={{justifyContent: 'space-between', display: 'flex'}}>
           <Link to='/'>
             <div style={{display: 'flex', alignItems: 'center'}}>
-            <img src={firey} style={{    minWidth: '56px',
-              minHeight: '56px',
-              maxWidth: '56px',
-              maxHeight: '56px'}} alt=""/>
+
           <Typography style={{color: "white"}} variant="h6">
-            Firey
+            Urbanity
           </Typography> </div></Link>
           <div style={{display: 'flex'}}>
             <Link to='/'><Button style={{color: "white"}}>Home</Button></Link>
@@ -152,67 +143,6 @@ function App(props) {
         </Toolbar>
         </Container>
       </AppBar>
-
-
-      <CssBaseline />
-      <React.Fragment>
-        <Switch>
-          <Route
-            exact
-            path={'/threads/new'}
-            render={() => (
-              <NewThread
-                space={chatSpace}
-                profile={profile}
-                address={currentAddress}
-                did={currentDid}
-                badges={badges}
-                isReady={isAppReady}
-                refresh={forceRefresh.bind(this)}
-                locations={locations}
-                limits={limits}
-              />
-            )}
-          />
-          <Route
-            exact
-            path={'/threads/:threadId'}
-            render={() => (
-              <Chat
-                space={chatSpace}
-                profile={profile}
-                address={currentAddress}
-                badges={badges}
-                isReady={isAppReady}
-                did={currentDid}
-                box={box}
-                refresh={forceRefresh.bind(this)}
-                limits={limits}
-                locations={locations}
-              />
-            )}
-          />
-
-          <Route
-            exact
-            path='/'
-            render={() => <ForumHome
-              history={history}
-              box={box}
-              address={currentAddress}
-              did={currentDid}
-              profile={profile}
-              badges={badges}
-              isReady={isAppReady}
-              space={chatSpace}
-              threads={threads}
-              refresh={forceRefresh.bind(this)}
-              locations={locations}
-            />}
-          />
-
-        </Switch>
-      </React.Fragment>
     </div>
   );
 }

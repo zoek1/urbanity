@@ -49,21 +49,23 @@ def create_POI(request):
 
 
 @csrf_exempt
-@require_POST
 def create_availability(request):
-    data = json.loads(request.body)
-    poi = data.get('poi')
-    space = data.get('space')
-    did = data.get('did')
-    status = data.get('status')
-    schedule = data.get('schedule')
-    challenge = data.get('challenge')
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        poi = data.get('poi')
+        space = data.get('space')
+        did = data.get('did')
+        status = data.get('status')
+        schedule = data.get('schedule')
+        challenge = data.get('challenge')
 
-    availability = Availability(did=did, poi_id=poi, space=space, schedule=schedule,
-                                challenge=challenge)
-    availability.save()
+        availability = Availability(did=did, poi_id=poi, space=space, schedule=schedule,
+                                    challenge=challenge)
+        availability.save()
 
-    return JsonResponse(availability.to_dict(), status=201)
+        return JsonResponse(availability.to_dict(), status=201)
+
+    return JsonResponse({}, status=200)
 
 
 @csrf_exempt

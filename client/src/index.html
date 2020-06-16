@@ -53,118 +53,121 @@
 	      </div>
 	      
 	      <div class="bmodal">
-		<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal">Launch modal</button>
+		<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#scheduleModal">Launch modal</button>
 
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Hours</h5>
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		      </div>
-		      <div class="modal-body">
-			<div class="row" >
-			  <select class="col form-control form-control-sm">
-			    <option>Lunes</option>
-			    <option>Martes</option>
-			    <option>Miércoles</option>
-			    <option>Jueves</option>
-			    <option>Viernes</option>
-			    <option>Sabado</option>
-			    <option>Domingo</option>
-			  </select>
-			  <select class="col form-control form-control-sm">
-			    <option>1:00 am</option>
-			    <option>2:00 am</option>
-			    <option>3:00 am</option>
-			    <option>4:00 am</option>
-			    <option>5:00 am</option>
-			    <option>6:00 am</option>
-			    <option>7:00 am</option>
-			    <option>8:00 am</option>
-			    <option>9:00 am</option>
-			    <option>10:00 am</option>
-			    <option>11:00 am</option>
-			    <option>12:00 am</option>
-			    <option>13:00 pm</option>
-			    <option>14:00 pm</option>
-			    <option>15:00 pm</option>
-			    <option>16:00 pm</option>
-			    <option>17:00 pm</option>
-			    <option>18:00 pm</option>
-			    <option>19:00 pm</option>
-			    <option>20:00 pm</option>
-			    <option>21:00 pm</option>
-			    <option>22:00 pm</option>
-			    <option>23:00 pm</option>
-			    <option>24:00 pm</option>
-			    
-			  </select>
-			  <select class="col form-control form-control-sm">
-			    <option>1:00 am</option>
-			    <option>2:00 am</option>
-			    <option>3:00 am</option>
-			    <option>4:00 am</option>
-			    <option>5:00 am</option>
-			    <option>6:00 am</option>
-			    <option>7:00 am</option>
-			    <option>8:00 am</option>
-			    <option>9:00 am</option>
-			    <option>10:00 am</option>
-			    <option>11:00 am</option>
-			    <option>12:00 am</option>
-			    <option>13:00 pm</option>
-			    <option>14:00 pm</option>
-			    <option>15:00 pm</option>
-			    <option>16:00 pm</option>
-			    <option>17:00 pm</option>
-			    <option>18:00 pm</option>
-			    <option>19:00 pm</option>
-			    <option>20:00 pm</option>
-			    <option>21:00 pm</option>
-			    <option>22:00 pm</option>
-			    <option>23:00 pm</option>
-			    <option>24:00 pm</option>
-			  </select>
-			  <button class="btn btn-plus"  onclick="myFunction()"><i class="fa fa-plus"></i></button>
-			</div>
-			<div id="addhours"></div>
-			<h4>Servicio</h4>
-			<select class="col-5 form-control form-control-sm">
-			  <option>Domicilio</option>
-			  <option>Recoger en tienda</option>
-			  <option>Sin servicio</option>
-			</select>
+		<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<form id="scheduleForm" action="">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Hours</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row" >
+								<select name="schedule-day" class="col form-control form-control-sm">
+									<option>Lunes</option>
+									<option>Martes</option>
+									<option>Miércoles</option>
+									<option>Jueves</option>
+									<option>Viernes</option>
+									<option>Sabado</option>
+									<option>Domingo</option>
+								</select>
+								<select name="schedule-open" class="col form-control form-control-sm">
+									<option>1:00 am</option>
+									<option>2:00 am</option>
+									<option>3:00 am</option>
+									<option>4:00 am</option>
+									<option>5:00 am</option>
+									<option>6:00 am</option>
+									<option>7:00 am</option>
+									<option>8:00 am</option>
+									<option>9:00 am</option>
+									<option>10:00 am</option>
+									<option>11:00 am</option>
+									<option>12:00 am</option>
+									<option>13:00 pm</option>
+									<option>14:00 pm</option>
+									<option>15:00 pm</option>
+									<option>16:00 pm</option>
+									<option>17:00 pm</option>
+									<option>18:00 pm</option>
+									<option>19:00 pm</option>
+									<option>20:00 pm</option>
+									<option>21:00 pm</option>
+									<option>22:00 pm</option>
+									<option>23:00 pm</option>
+									<option>24:00 pm</option>
 
-			
-			<div class="form-check">
-			  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-			  <label class="form-check-label" for="defaultCheck1">
-			    Cubrebocas
-			  </label>
-			</div>
-			<div class="form-check">
-			  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-			  <label class="form-check-label" for="defaultCheck1">
-			    Perfriendly
-			  </label>
-			</div>
-			<div class="form-check">
-			  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-			  <label class="form-check-label" for="defaultCheck1">
-			    Autoservicio
-			  </label>
-			</div>
-			
-		      </div>
-		      <div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			<button type="button" class="btn btn-primary">Save changes</button>
-		      </div>
-		    </div>
-		  </div>
+								</select>
+								<select name="schedule-close" class="col form-control form-control-sm">
+									<option>1:00 am</option>
+									<option>2:00 am</option>
+									<option>3:00 am</option>
+									<option>4:00 am</option>
+									<option>5:00 am</option>
+									<option>6:00 am</option>
+									<option>7:00 am</option>
+									<option>8:00 am</option>
+									<option>9:00 am</option>
+									<option>10:00 am</option>
+									<option>11:00 am</option>
+									<option>12:00 am</option>
+									<option>13:00 pm</option>
+									<option>14:00 pm</option>
+									<option>15:00 pm</option>
+									<option>16:00 pm</option>
+									<option>17:00 pm</option>
+									<option>18:00 pm</option>
+									<option>19:00 pm</option>
+									<option>20:00 pm</option>
+									<option>21:00 pm</option>
+									<option>22:00 pm</option>
+									<option>23:00 pm</option>
+									<option>24:00 pm</option>
+								</select>
+								<button class="btn btn-plus"  onclick="myFunction(event)"><i class="fa fa-plus"></i></button>
+							</div>
+							<div id="addhours"></div>
+							<h4>Servicio</h4>
+							<select name="type_service" class="col-5 form-control form-control-sm">
+								<option>Domicilio</option>
+								<option>Recoger en tienda</option>
+								<option>Sin servicio</option>
+							</select>
+
+
+							<div class="form-check">
+								<input name="covers" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+								<label class="form-check-label" for="defaultCheck1">
+									Cubrebocas
+								</label>
+							</div>
+							<div class="form-check">
+								<input name="petfriendly" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+								<label class="form-check-label" for="defaultCheck1">
+									Perfriendly
+								</label>
+							</div>
+							<div class="form-check">
+								<input name="autoservice" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+								<label class="form-check-label" for="defaultCheck1">
+									Autoservicio
+								</label>
+							</div>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Save changes</button>
+						</div>
+					</div>
+				</div>
+			</form>
+
 		</div>
 	      </div>
 	    </div>
@@ -192,9 +195,73 @@
     
       <script>
 
-	function myFunction() {
-  var h = document.getElementById("addhours");
-  h.insertAdjacentHTML("beforeend", '<div class="row" id="addhours"><select class="col form-control form-control-sm"><option>Lunes</option><option>Martes</option> <option>Miércoles</option><option>Jueves</option><option>Viernes</option><option>Sabado</option><option>Domingo</option></select><select class="col form-control form-control-sm"><option>1:00 am</option><option>2:00 am</option><option>3:00 am</option><option>4:00 am</option><option>5:00 am</option><option>6:00 am</option><option>7:00 am</option><option>8:00 am</option><option>9:00 am</option><option>10:00 am</option> <option>11:00 am</option><option>12:00 am</option><option>13:00 pm</option><option>14:00 pm</option><option>15:00 pm</option><option>16:00 pm</option><option>17:00 pm</option><option>18:00 pm</option><option>19:00 pm</option><option>20:00 pm</option><option>21:00 pm</option><option>22:00 pm</option><option>23:00 pm</option><option>24:00 pm</option></select><select class="col form-control form-control-sm"><option>1:00 am</option><option>2:00 am</option><option>3:00 am</option><option>4:00 am</option><option>5:00 am</option><option>6:00 am</option><option>7:00 am</option><option>8:00 am</option><option>9:00 am</option><option>10:00 am</option><option>11:00 am</option><option>12:00 am</option><option>13:00 pm</option><option>14:00 pm</option><option>15:00 pm</option><option>16:00 pm</option><option>17:00 pm</option><option>18:00 pm</option><option>19:00 pm</option> <option>20:00 pm</option><option>21:00 pm</option><option>22:00 pm</option><option>23:00 pm</option><option>24:00 pm</option></select></div>');
+	function myFunction(e) {
+		e.preventDefault();
+  		var h = document.getElementById("addhours");
+  		h.insertAdjacentHTML("beforeend", `
+<div class="row" id="addhours">
+	<select name="schedule-day" class="col form-control form-control-sm">
+		<option>Lunes</option>
+		<option>Martes</option>
+		<option>Miércoles</option>
+		<option>Jueves</option>
+		<option>Viernes</option>
+		<option>Sabado</option>
+		<option>Domingo</option>
+	</select>
+	<select name="schedule-open" class="col form-control form-control-sm">
+		<option>1:00 am</option>
+		<option>2:00 am</option>
+		<option>3:00 am</option>
+		<option>4:00 am</option>
+		<option>5:00 am</option>
+		<option>6:00 am</option>
+		<option>7:00 am</option>
+		<option>8:00 am</option>
+		<option>9:00 am</option>
+		<option>10:00 am</option>
+		<option>11:00 am</option>
+		<option>12:00 am</option>
+		<option>13:00 pm</option>
+		<option>14:00 pm</option>
+		<option>15:00 pm</option>
+		<option>16:00 pm</option>
+		<option>17:00 pm</option>
+		<option>18:00 pm</option>
+		<option>19:00 pm</option>
+		<option>20:00 pm</option>
+		<option>21:00 pm</option>
+		<option>22:00 pm</option>
+		<option>23:00 pm</option>
+		<option>24:00 pm</option>
+	</select>
+	<select name="schedule-close" class="col form-control form-control-sm">
+		<option>1:00 am</option>
+		<option>2:00 am</option>
+		<option>3:00 am</option>
+		<option>4:00 am</option>
+		<option>5:00 am</option>
+		<option>6:00 am</option>
+		<option>7:00 am</option>
+		<option>8:00 am</option>
+		<option>9:00 am</option>
+		<option>10:00 am</option>
+		<option>11:00 am</option>
+		<option>12:00 am</option>
+		<option>13:00 pm</option>
+		<option>14:00 pm</option>
+		<option>15:00 pm</option>
+		<option>16:00 pm</option>
+		<option>17:00 pm</option>
+		<option>18:00 pm</option>
+		<option>19:00 pm</option>
+		<option>20:00 pm</option>
+		<option>21:00 pm</option>
+		<option>22:00 pm</option>
+		<option>23:00 pm</option>
+		<option>24:00 pm</option>
+	</select>
+</div>`);
 }
 
 
@@ -363,31 +430,69 @@ map.addLayer({
 	});
 
 	
-map.on('click', 'points', function(e) {
-var coordinates = e.features[0].geometry.coordinates.slice();
-var description = e.features[0].properties.description;
+	map.on('click', 'points', function(e) {
+		var coordinates = e.features[0].geometry.coordinates.slice();
+		var description = e.features[0].properties.description;
 
-while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-}
- 
-new mapboxgl.Popup()
-.setLngLat(coordinates)
-.setHTML(description)
-.addTo(map);
-});
+		while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+			coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+		}
+		// Funcion para obtener la informacion de disponibilidad que acabamos de guardar
+		
+		new mapboxgl.Popup()
+		.setLngLat(coordinates)
+		.setHTML(description)
+		.addTo(map);
+	});
  
 
-map.on('mouseenter', 'points', function() {
-map.getCanvas().style.cursor = 'pointer';
-});
+	map.on('mouseenter', 'points', function() {
+		map.getCanvas().style.cursor = 'pointer';
+	});
  
-map.on('mouseleave', 'points', function() {
-map.getCanvas().style.cursor = '';
-});
+	map.on('mouseleave', 'points', function() {
+		map.getCanvas().style.cursor = '';
+	});
 });
 
-      
+    $('#scheduleForm').on('submit', (e) => {
+    	e.preventDefault();
+    	console.log(e.target)
+    	console.log($(e.target))
+		console.log($(e.target).serializeArray())
+		const fields  = $(e.target).serializeArray()
+		const days_arrays =  fields.filter((campo) => campo.name.startsWith('schedule') ).map((campo) => campo.value)
+		const schedule = {}
+
+		for (let i=0; i < (days_arrays.length / 3); i++) {
+			const groups_day = days_arrays.slice(3*i, 3*i + 3)
+			const day = groups_day[0]
+			const open = groups_day[1]
+			const close = groups_day[2]
+			schedule[day] = {
+				'open': open,
+				'close': close
+			}
+		}
+
+		const body = {
+    		poi: 1,
+			did: '02993874666662',
+			space: 'urbanity-staging',
+			status: 'active',
+			schedule: schedule
+    	}
+
+		fetch('http://localhost/api/v0/poi/availability/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(body)
+		})
+
+		$('#scheduleModal').modal('hide')
+	})
     </script>
  
 </body>
