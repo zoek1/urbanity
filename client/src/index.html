@@ -59,8 +59,8 @@
 		<p id="Domingo"></p>
 	      </div>
 
-	      <div class="bmodal">
-		<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#scheduleModal">Launch modal</button>
+	<div class="bmodal">
+		<button id="bmodal" type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#scheduleModal">Launch modal</button>
 
 		<div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<form id="scheduleForm" action="">
@@ -146,7 +146,6 @@
 								<option>Sin servicio</option>
 							</select>
 
-
 							<div class="form-check">
 								<input name="covers" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
@@ -176,25 +175,27 @@
 			</form>
 
 		</div>
-	      </div>
+	</div>
 	    </div>
 
 	    <h3>Reviews</h3>
-	    <div class="reviews">
-	      <img class="user" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS7FFrxhGko3hUyRhuXBo8cpFfx_cdN5z6syFiBHJBJNUyl2SFf&usqp=CAU" alt="user">
-	      <p class="comments">Wonderful!</p>
-	    </div>
-	    <div class="reviews">
-	      <img class="user" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS3rDsZjwyWWmxqi4Rd-6gB-fPiF4S0Y9Lik4DjBQLyW8EjYC68&usqp=CAU" alt="user">
-	      <p class="comments">Very nice!</p>
-	    </div>
-	    <div class="reviews">
-	      <img class="user" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRbZzORQRNq2QIskyueSxq0w-fS-YBGykLeVsjEh_Sgu5H2DrLz&usqp=CAU" alt="user">
-	      <p class="comments">The place is amazing, thanks</p>
-	    </div>
-	    <div class="row justify-content-center">
-	      <button type="button" class="btn btn-link">View all reviews</button>
-	    </div>
+      <div id="content-reviews">
+  	    <div class="reviews">
+  	      <img class="user" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS7FFrxhGko3hUyRhuXBo8cpFfx_cdN5z6syFiBHJBJNUyl2SFf&usqp=CAU" alt="user">
+  	      <p class="comments">Wonderful!</p>
+  	    </div>
+  	    <div class="reviews">
+  	      <img class="user" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS3rDsZjwyWWmxqi4Rd-6gB-fPiF4S0Y9Lik4DjBQLyW8EjYC68&usqp=CAU" alt="user">
+  	      <p class="comments">Very nice!</p>
+  	    </div>
+  	    <div class="reviews">
+  	      <img class="user" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRbZzORQRNq2QIskyueSxq0w-fS-YBGykLeVsjEh_Sgu5H2DrLz&usqp=CAU" alt="user">
+  	      <p class="comments">The place is amazing, thanks</p>
+  	    </div>
+  	    <div class="row justify-content-center">
+  	      <button type="button" class="btn btn-link">View all reviews</button>
+  	    </div>
+      </div>
 	  </div>
 	</div>
 	<div class="col-9 justify-content-end" id="map"></div>
@@ -452,14 +453,28 @@ console.log(e.features[0])
       .then(res => res.json())
       .then((res)=> {
         if(res.data.length != 0){
+            $('#bmodal').hide();
           var last_position = res.data.length - 1;
           var days =  Object.keys(res.data[last_position].schedule);
           for(i = 0; i < days.length; i++)
             $("#"+days[i]).html("<p>"+days[i]+"<br>Open: "+ res.data[last_position].schedule[days[i]].open + " Close: " + res.data[last_position].schedule[days[i]].close +"</p>")
 
           $("#title").text(res.data[last_position].poi.title)
+          $('#content-reviews').show(); 
         }else{
-          alert("no hay información del punto!")
+          $("#Lunes").html("<p></p>")
+          $("#Martes").html("<p></p>")
+          $("#Miercoles").html("<p></p>")
+          $("#Jueves").html("<p></p>")
+          $("#Viernes").html("<p></p>")
+          $("#Sabado").html("<p></p>")
+          $("#Domingo").html("<p></p>")
+
+          $("#title").text("")
+          $('#bmodal').show();
+          $('#content-reviews').hide();
+          alert("no hay informacion del punto!");
+
         }
     });
 
@@ -517,6 +532,7 @@ console.log(e.features[0])
 
 		$('#scheduleModal').modal('hide')
 	})
+
     </script>
 
 </body>
