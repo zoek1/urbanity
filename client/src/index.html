@@ -45,13 +45,20 @@
 	    </a>
 	  </div>
 	  <div class="container">
-	    <h2>Teatro degollado</h2>
+	    <h2 id="title">Teatro degollado</h2>
 	    <h3>Address</h3>
-	    <p>Teatro Degollado, Guadalajara, Jalisco 44100, México</p>
+	    <p id="address">Teatro Degollado, Guadalajara, Jalisco 44100, México</p>
 	    <div class="hours">
 	      <div class="dropdown"><h3>Hours</h3>
+		<p id="Lunes"> </p>
+		<p id="Martes"></p>
+		<p id="Miercoles"></p>
+		<p id="Jueves"></p>
+		<p id="Viernes"></p>
+		<p id="Sabado"></p>
+		<p id="Domingo"></p>
 	      </div>
-	      
+
 	      <div class="bmodal">
 		<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#scheduleModal">Launch modal</button>
 
@@ -60,7 +67,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Hours</h5>
+						  <h5 class="modal-title" id="exampleModalLabel">Hours</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -192,7 +199,7 @@
 	</div>
 	<div class="col-9 justify-content-end" id="map"></div>
       </div>
-    
+
       <script>
 
 	function myFunction(e) {
@@ -265,7 +272,7 @@
 }
 
 
-	
+
 mapboxgl.accessToken = 'pk.eyJ1IjoibW9vbm5peSIsImEiOiJja2F5cGpmaTYwbHB3MnRvN3hqanFjZHU0In0.5t0Z1U-kIWbUSSyDys3ToA';
 
 var map = new mapboxgl.Map({
@@ -299,16 +306,16 @@ map.addControl(
 
 
 
- 
+
 var size = 100;
- 
+
 // implementation of CustomLayerInterface to draw a pulsing dot icon on the map
 // see https://docs.mapbox.com/mapbox-gl-js/api/#customlayerinterface for more info
 var pulsingDot = {
 width: size,
 height: size,
 data: new Uint8Array(size * size * 4),
- 
+
 // get rendering context for the map canvas when layer is added to the map
 onAdd: function() {
 var canvas = document.createElement('canvas');
@@ -316,16 +323,16 @@ canvas.width = this.width;
 canvas.height = this.height;
 this.context = canvas.getContext('2d');
 },
- 
+
 // called once before every frame where the icon will be used
 render: function() {
 var duration = 1000;
 var t = (performance.now() % duration) / duration;
- 
+
 var radius = (size / 2) * 0.3;
 var outerRadius = (size / 2) * 0.7 * t + radius;
 var context = this.context;
- 
+
 // draw outer circle
 context.clearRect(0, 0, this.width, this.height);
 context.beginPath();
@@ -338,7 +345,7 @@ Math.PI * 2
 );
 context.fillStyle = 'rgba(255, 200, 200,' + (1 - t) + ')';
 context.fill();
- 
+
 // draw inner circle
 context.beginPath();
 context.arc(
@@ -353,7 +360,7 @@ context.strokeStyle = 'white';
 context.lineWidth = 2 + 4 * (1 - t);
 context.fill();
 context.stroke();
- 
+
 // update this image's data with data from the canvas
 this.data = context.getImageData(
 0,
@@ -361,15 +368,15 @@ this.data = context.getImageData(
 this.width,
 this.height
 ).data;
- 
+
 // continuously repaint the map, resulting in the smooth animation of the dot
 map.triggerRepaint();
- 
+
 // return `true` to let the map know that the image was updated
 return true;
 }
 };
- 
+
 map.on('load', function() {
 map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
 map.addSource('points', {
@@ -379,6 +386,7 @@ map.addSource('points', {
 'features': [
 
 {
+'id': 1,
 'type': 'Feature',
 'properties': {
 'description':
@@ -392,6 +400,7 @@ map.addSource('points', {
 
 
 {
+  'id': 2,
 'type': 'Feature',
 'properties': {
 'description':
@@ -405,6 +414,7 @@ map.addSource('points', {
 
 
 {
+  'id': 3,
 'type': 'Feature',
 'properties': {
 'description':
@@ -415,7 +425,7 @@ map.addSource('points', {
 'coordinates': [-77.043444, 38.909664]
 }
 }
-	
+
 ]
 }
 });
@@ -429,27 +439,41 @@ map.addLayer({
 }
 	});
 
-	
+
 	map.on('click', 'points', function(e) {
 		var coordinates = e.features[0].geometry.coordinates.slice();
 		var description = e.features[0].properties.description;
-
+console.log(e.features[0])
 		while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
 			coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-		}
-		// Funcion para obtener la informacion de disponibilidad que acabamos de guardar
-		
+    }
+
+    fetch('http://localhost/api/v0/poi/' +e.features[0].id+ '/availability/')
+      .then(res => res.json())
+      .then((res)=> {
+        if(res.data.length != 0){
+          var last_position = res.data.length - 1;
+          var days =  Object.keys(res.data[last_position].schedule);
+          for(i = 0; i < days.length; i++)
+            $("#"+days[i]).html("<p>"+days[i]+"<br>Open: "+ res.data[last_position].schedule[days[i]].open + " Close: " + res.data[last_position].schedule[days[i]].close +"</p>")
+
+          $("#title").text(res.data[last_position].poi.title)
+        }else{
+          alert("no hay información del punto!")
+        }
+    });
+
 		new mapboxgl.Popup()
 		.setLngLat(coordinates)
 		.setHTML(description)
 		.addTo(map);
 	});
- 
+
 
 	map.on('mouseenter', 'points', function() {
 		map.getCanvas().style.cursor = 'pointer';
 	});
- 
+
 	map.on('mouseleave', 'points', function() {
 		map.getCanvas().style.cursor = '';
 	});
@@ -494,9 +518,6 @@ map.addLayer({
 		$('#scheduleModal').modal('hide')
 	})
     </script>
- 
+
 </body>
 </html>
-
-
-
