@@ -13,6 +13,9 @@ body {
 #map2{
     padding: 0;
 }
+.id-poi{
+    display: none;
+}
 
 .mapboxgl-ctrl-geocoder input[type="text"]{
     padding: 10px 80px 10px 30px;
@@ -68,7 +71,7 @@ li {
 }
 
 .dropdown-item{
-    color: #3C4043;    
+    color: #3C4043;
 }
 
 #dropdownMenuButton {

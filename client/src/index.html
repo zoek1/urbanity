@@ -74,7 +74,9 @@
 						</div>
 						<div class="modal-body">
 							<div class="row" >
-								<select name="schedule-day" class="col form-control form-control-sm">
+                <input class="id-poi" id="poi-id" type="number">
+
+  								<select name="schedule-day" class="col form-control form-control-sm">
 									<option>Lunes</option>
 									<option>Martes</option>
 									<option>Miércoles</option>
@@ -313,155 +315,161 @@ var size = 100;
 // implementation of CustomLayerInterface to draw a pulsing dot icon on the map
 // see https://docs.mapbox.com/mapbox-gl-js/api/#customlayerinterface for more info
 var pulsingDot = {
-width: size,
-height: size,
-data: new Uint8Array(size * size * 4),
+  width: size,
+  height: size,
+  data: new Uint8Array(size * size * 4),
 
 // get rendering context for the map canvas when layer is added to the map
-onAdd: function() {
-var canvas = document.createElement('canvas');
-canvas.width = this.width;
-canvas.height = this.height;
-this.context = canvas.getContext('2d');
-},
+  onAdd: function() {
+    var canvas = document.createElement('canvas');
+    canvas.width = this.width;
+    canvas.height = this.height;
+    this.context = canvas.getContext('2d');
+  },
 
 // called once before every frame where the icon will be used
-render: function() {
-var duration = 1000;
-var t = (performance.now() % duration) / duration;
+  render: function() {
+    var duration = 1000;
+    var t = (performance.now() % duration) / duration;
 
-var radius = (size / 2) * 0.3;
-var outerRadius = (size / 2) * 0.7 * t + radius;
-var context = this.context;
+    var radius = (size / 2) * 0.3;
+    var outerRadius = (size / 2) * 0.7 * t + radius;
+    var context = this.context;
 
 // draw outer circle
-context.clearRect(0, 0, this.width, this.height);
-context.beginPath();
-context.arc(
-this.width / 2,
-this.height / 2,
-outerRadius,
-0,
-Math.PI * 2
-);
-context.fillStyle = 'rgba(255, 200, 200,' + (1 - t) + ')';
-context.fill();
+    context.clearRect(0, 0, this.width, this.height);
+    context.beginPath();
+    context.arc(
+      this.width / 2,
+      this.height / 2,
+      outerRadius,
+      0,
+      Math.PI * 2
+    );
+    context.fillStyle = 'rgba(255, 200, 200,' + (1 - t) + ')';
+    context.fill();
 
 // draw inner circle
-context.beginPath();
-context.arc(
-this.width / 2,
-this.height / 2,
-radius,
-0,
-Math.PI * 2
-);
-context.fillStyle = 'rgba(255, 100, 100, 1)';
-context.strokeStyle = 'white';
-context.lineWidth = 2 + 4 * (1 - t);
-context.fill();
-context.stroke();
+    context.beginPath();
+    context.arc(
+      this.width / 2,
+      this.height / 2,
+      radius,
+      0,
+      Math.PI * 2
+    );
+    context.fillStyle = 'rgba(255, 100, 100, 1)';
+    context.strokeStyle = 'white';
+    context.lineWidth = 2 + 4 * (1 - t);
+    context.fill();
+    context.stroke();
 
 // update this image's data with data from the canvas
-this.data = context.getImageData(
-0,
-0,
-this.width,
-this.height
-).data;
+    this.data = context.getImageData(
+      0,
+      0,
+      this.width,
+      this.height
+    ).data;
 
 // continuously repaint the map, resulting in the smooth animation of the dot
-map.triggerRepaint();
+    map.triggerRepaint();
 
 // return `true` to let the map know that the image was updated
-return true;
-}
+    return true;
+  }
 };
 
 map.on('load', function() {
-map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
-map.addSource('points', {
-'type': 'geojson',
-'data': {
-'type': 'FeatureCollection',
-'features': [
+  map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
+  map.addSource('points', {
+    'type': 'geojson',
+    'data': {
+      'type': 'FeatureCollection',
+      'features': [
+        {
+          'id': 1,
+          'type': 'Feature',
+          'properties': {
+            'description':
+            '<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant" target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>'
+          },
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [-77.007481, 38.876516]
+          }
+        },
 
-{
-'id': 1,
-'type': 'Feature',
-'properties': {
-'description':
-'<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant" target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>'
-},
-'geometry': {
-'type': 'Point',
-'coordinates': [-77.007481, 38.876516]
-}
-},
+        {
+          'id': 2,
+          'type': 'Feature',
+          'properties': {
+            'description':
+            '<strong>Seersucker Bike Ride and Social</strong><p>Feeling dandy? Get fancy, grab your bike, and take part in this year\'s <a href="http://dandiesandquaintrelles.com/2012/04/the-seersucker-social-is-set-for-june-9th-save-the-date-and-start-planning-your-look/" target="_blank" title="Opens in a new window">Seersucker Social</a> bike ride from Dandies and Quaintrelles. After the ride enjoy a lawn party at Hillwood with jazz, cocktails, paper hat-making, and more. 11:00-7:00 p.m.</p>'
+          },
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [-77.052477, 38.943951]
+          }
+        },
 
+        {
+          'id': 3,
+          'type': 'Feature',
+          'properties': {
+            'description':
+            '<strong>Capital Pride Parade</strong><p>The annual <a href="http://www.capitalpride.org/parade" target="_blank" title="Opens in a new window">Capital Pride Parade</a> makes its way through Dupont this Saturday. 4:30 p.m. Free.</p>'
+          },
+          'geometry': {
+            'type': 'Point',
+            'coordinates': [-77.043444, 38.909664]
+          }
+        }
 
-{
-  'id': 2,
-'type': 'Feature',
-'properties': {
-'description':
-'<strong>Seersucker Bike Ride and Social</strong><p>Feeling dandy? Get fancy, grab your bike, and take part in this year\'s <a href="http://dandiesandquaintrelles.com/2012/04/the-seersucker-social-is-set-for-june-9th-save-the-date-and-start-planning-your-look/" target="_blank" title="Opens in a new window">Seersucker Social</a> bike ride from Dandies and Quaintrelles. After the ride enjoy a lawn party at Hillwood with jazz, cocktails, paper hat-making, and more. 11:00-7:00 p.m.</p>'
-},
-'geometry': {
-'type': 'Point',
-'coordinates': [-77.052477, 38.943951]
-}
-},
-
-
-{
-  'id': 3,
-'type': 'Feature',
-'properties': {
-'description':
-'<strong>Capital Pride Parade</strong><p>The annual <a href="http://www.capitalpride.org/parade" target="_blank" title="Opens in a new window">Capital Pride Parade</a> makes its way through Dupont this Saturday. 4:30 p.m. Free.</p>'
-},
-'geometry': {
-'type': 'Point',
-'coordinates': [-77.043444, 38.909664]
-}
-}
-
-]
-}
+      ]
+    }
 });
+
 map.addLayer({
-'id': 'points',
-'type': 'symbol',
-'source': 'points',
-'layout': {
-	'icon-image': 'pulsing-dot',
-	'icon-allow-overlap':true
-}
+  'id': 'points',
+  'type': 'symbol',
+  'source': 'points',
+  'layout': {
+	   'icon-image': 'pulsing-dot',
+	    'icon-allow-overlap':true
+    }
 	});
 
-
+//Se ejecuta cuando se le da click a un punto
 	map.on('click', 'points', function(e) {
+    //e.features contiene el elemento al que se hizo click y propiedades del punto
 		var coordinates = e.features[0].geometry.coordinates.slice();
 		var description = e.features[0].properties.description;
-console.log(e.features[0])
+    console.log(e.features[0])
+
+    //obtiene la posicion para agregar el cuadro de dialogo
 		while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
 			coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
-
-    fetch('http://localhost/api/v0/poi/' +e.features[0].id+ '/availability/')
+    var id = e.features[0].id;
+    //obtiene la disponibilidad del punto que fue seleccionado usando su id
+    fetch('http://localhost/api/v0/poi/' +id+ '/availability/')
       .then(res => res.json())
       .then((res)=> {
-        if(res.data.length != 0){
-            $('#bmodal').hide();
+        if(res.data.length != 0){ //verifica que el punto tenga disponibilidades agregadas
+          //oculta el boton de disponibilidad, calcula la ultima disponibilidad y muestra los datos y las reviews
+          $('#bmodal').hide();
           var last_position = res.data.length - 1;
           var days =  Object.keys(res.data[last_position].schedule);
           for(i = 0; i < days.length; i++)
             $("#"+days[i]).html("<p>"+days[i]+"<br>Open: "+ res.data[last_position].schedule[days[i]].open + " Close: " + res.data[last_position].schedule[days[i]].close +"</p>")
 
           $("#title").text(res.data[last_position].poi.title)
-          $('#content-reviews').show(); 
+          $('#content-reviews').show();
         }else{
+          // si no tiene disponibilidades oculta los dias, reviews y se muestra el boton para agregar disponibilidad
+          $("#poi-id").val(id)
+
           $("#Lunes").html("<p></p>")
           $("#Martes").html("<p></p>")
           $("#Miercoles").html("<p></p>")
@@ -475,13 +483,15 @@ console.log(e.features[0])
           $('#content-reviews').hide();
           alert("no hay informacion del punto!");
 
+          console.log(id)
+
         }
     });
 
-		new mapboxgl.Popup()
-		.setLngLat(coordinates)
-		.setHTML(description)
-		.addTo(map);
+//		new mapboxgl.Popup()
+//		.setLngLat(coordinates)
+//		.setHTML(description)
+//		.addTo(map);
 	});
 
 
@@ -494,10 +504,10 @@ console.log(e.features[0])
 	});
 });
 
-    $('#scheduleForm').on('submit', (e) => {
-    	e.preventDefault();
-    	console.log(e.target)
-    	console.log($(e.target))
+  $('#scheduleForm').on('submit', (e) => {
+    e.preventDefault();
+    console.log(e.target)
+    console.log($(e.target))
 		console.log($(e.target).serializeArray())
 		const fields  = $(e.target).serializeArray()
 		const days_arrays =  fields.filter((campo) => campo.name.startsWith('schedule') ).map((campo) => campo.value)
@@ -515,12 +525,20 @@ console.log(e.features[0])
 		}
 
 		const body = {
-    		poi: 1,
+      poi: parseInt($('#poi-id').val()),
 			did: '02993874666662',
 			space: 'urbanity-staging',
 			status: 'active',
-			schedule: schedule
+			schedule: schedule,
+      info: {
+          'service': service,
+          'cubrebocas': cubrebocas,
+          'petfriendly': petfriendly,
+          'autoservice': autoservice
+        }
     	}
+
+return
 
 		fetch('http://localhost/api/v0/poi/availability/', {
 			method: 'POST',
