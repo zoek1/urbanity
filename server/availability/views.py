@@ -58,9 +58,9 @@ def create_availability(request):
         status = data.get('status')
         schedule = data.get('schedule')
         challenge = data.get('challenge')
-
+        info = data.get('info')
         availability = Availability(did=did, poi_id=poi, space=space, schedule=schedule,
-                                    challenge=challenge)
+                                    challenge=challenge, info=info)
         availability.save()
 
         return JsonResponse(availability.to_dict(), status=201)

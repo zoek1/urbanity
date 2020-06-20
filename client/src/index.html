@@ -45,18 +45,18 @@
 	    </a>
 	  </div>
 	  <div class="container">
-	    <h2 id="title">Teatro degollado</h2>
+	    <h2 id="title"></h2>
 	    <h3>Address</h3>
-	    <p id="address">Teatro Degollado, Guadalajara, Jalisco 44100, México</p>
+	    <p id="address"></p>
 	    <div class="hours">
 	      <div class="dropdown"><h3>Hours</h3>
-		<p id="Lunes"> </p>
-		<p id="Martes"></p>
-		<p id="Miercoles"></p>
-		<p id="Jueves"></p>
-		<p id="Viernes"></p>
-		<p id="Sabado"></p>
-		<p id="Domingo"></p>
+      		<p id="Lunes"> </p>
+      		<p id="Martes"></p>
+      		<p id="Miercoles"></p>
+      		<p id="Jueves"></p>
+      		<p id="Viernes"></p>
+      		<p id="Sabado"></p>
+      		<p id="Domingo"></p>
 	      </div>
 
 	<div class="bmodal">
@@ -149,19 +149,19 @@
 							</select>
 
 							<div class="form-check">
-								<input name="covers" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+								<input name="covers" class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
 									Cubrebocas
 								</label>
 							</div>
 							<div class="form-check">
-								<input name="petfriendly" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+								<input name="petfriendly" class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
 									Perfriendly
 								</label>
 							</div>
 							<div class="form-check">
-								<input name="autoservice" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+								<input name="autoservice" class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
 									Autoservicio
 								</label>
@@ -440,6 +440,16 @@ map.addLayer({
     }
 	});
 
+  function clean(){
+    $("#Lunes").html("<p></p>")
+    $("#Martes").html("<p></p>")
+    $("#Miercoles").html("<p></p>")
+    $("#Jueves").html("<p></p>")
+    $("#Viernes").html("<p></p>")
+    $("#Sabado").html("<p></p>")
+    $("#Domingo").html("<p></p>")
+  }
+
 //Se ejecuta cuando se le da click a un punto
 	map.on('click', 'points', function(e) {
     //e.features contiene el elemento al que se hizo click y propiedades del punto
@@ -458,7 +468,9 @@ map.addLayer({
       .then((res)=> {
         if(res.data.length != 0){ //verifica que el punto tenga disponibilidades agregadas
           //oculta el boton de disponibilidad, calcula la ultima disponibilidad y muestra los datos y las reviews
-          $('#bmodal').hide();
+          //$('#bmodal').hide();
+          $("#poi-id").val(id)
+          clean();
           var last_position = res.data.length - 1;
           var days =  Object.keys(res.data[last_position].schedule);
           for(i = 0; i < days.length; i++)
@@ -470,20 +482,13 @@ map.addLayer({
           // si no tiene disponibilidades oculta los dias, reviews y se muestra el boton para agregar disponibilidad
           $("#poi-id").val(id)
 
-          $("#Lunes").html("<p></p>")
-          $("#Martes").html("<p></p>")
-          $("#Miercoles").html("<p></p>")
-          $("#Jueves").html("<p></p>")
-          $("#Viernes").html("<p></p>")
-          $("#Sabado").html("<p></p>")
-          $("#Domingo").html("<p></p>")
+          clean();
 
           $("#title").text("")
           $('#bmodal').show();
           $('#content-reviews').hide();
           alert("no hay informacion del punto!");
 
-          console.log(id)
 
         }
     });
@@ -511,7 +516,13 @@ map.addLayer({
 		console.log($(e.target).serializeArray())
 		const fields  = $(e.target).serializeArray()
 		const days_arrays =  fields.filter((campo) => campo.name.startsWith('schedule') ).map((campo) => campo.value)
-		const schedule = {}
+
+    const service_info = fields.filter((campo) => campo.name.startsWith('type-service')).map((campo) => campo.value)
+    const cubrebocas = fields.filter((campo) => campo.name.startsWith('covers')).map((campo) => campo.value)
+    const petfriendly = fields.filter((campo) => campo.name.startsWith('petfriendly')).map((campo) => campo.value)
+    const autoservice = fields.filter((campo) => campo.name.startsWith('autoservice')).map((campo) => campo.value)
+
+    const schedule = {}
 
 		for (let i=0; i < (days_arrays.length / 3); i++) {
 			const groups_day = days_arrays.slice(3*i, 3*i + 3)
@@ -531,14 +542,14 @@ map.addLayer({
 			status: 'active',
 			schedule: schedule,
       info: {
-          'service': service,
+          'service': service_info,
           'cubrebocas': cubrebocas,
           'petfriendly': petfriendly,
           'autoservice': autoservice
         }
     	}
 
-return
+//return
 
 		fetch('http://localhost/api/v0/poi/availability/', {
 			method: 'POST',

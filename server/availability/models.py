@@ -38,6 +38,7 @@ class Availability(models.Model):
     status = models.CharField(max_length=200, choices=STATUS, default='active')
     schedule = JSONField(default=dict())
     challenge = models.ForeignKey('availability.Availability', null=True, blank=True, on_delete=models.SET_NULL)
+    info = JSONField(default=dict())
 
     @property
     def status(self):
@@ -50,7 +51,8 @@ class Availability(models.Model):
             "space": self.space,
             "did": self.did,
             "schedule": self.schedule,
-            "challenge": self.challenge.id if self.challenge else None
+            "challenge": self.challenge.id if self.challenge else None,
+            "info": self.info
         }
 
 
