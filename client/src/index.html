@@ -79,7 +79,7 @@
   								<select name="schedule-day" class="col form-control form-control-sm">
 									<option>Lunes</option>
 									<option>Martes</option>
-									<option>Miércoles</option>
+									<option>Miercoles</option>
 									<option>Jueves</option>
 									<option>Viernes</option>
 									<option>Sabado</option>
@@ -142,7 +142,7 @@
 							</div>
 							<div id="addhours"></div>
 							<h4>Servicio</h4>
-							<select name="type_service" class="col-5 form-control form-control-sm">
+							<select name="type_service" class="col-5 form-control form-control-sm" value="">
 								<option>Domicilio</option>
 								<option>Recoger en tienda</option>
 								<option>Sin servicio</option>
@@ -180,6 +180,13 @@
 	</div>
 	    </div>
 
+      <div>
+        <div id="tipo-servicio"></div>
+        <div id="cubrebocas">Cubrebocas</div>
+        <div id="petfriendly">Petfriendly</div>
+        <div id="autoservicio">Autoservicio</div>
+      </div>
+
 	    <h3>Reviews</h3>
       <div id="content-reviews">
   	    <div class="reviews">
@@ -213,7 +220,7 @@
 	<select name="schedule-day" class="col form-control form-control-sm">
 		<option>Lunes</option>
 		<option>Martes</option>
-		<option>Miércoles</option>
+		<option>Miercoles</option>
 		<option>Jueves</option>
 		<option>Viernes</option>
 		<option>Sabado</option>
@@ -467,14 +474,34 @@ map.addLayer({
       .then(res => res.json())
       .then((res)=> {
         if(res.data.length != 0){ //verifica que el punto tenga disponibilidades agregadas
-          //oculta el boton de disponibilidad, calcula la ultima disponibilidad y muestra los datos y las reviews
-          //$('#bmodal').hide();
+          //asigna el id, calcula la ultima disponibilidad y muestra los datos y las reviews
+
           $("#poi-id").val(id)
           clean();
           var last_position = res.data.length - 1;
           var days =  Object.keys(res.data[last_position].schedule);
           for(i = 0; i < days.length; i++)
             $("#"+days[i]).html("<p>"+days[i]+"<br>Open: "+ res.data[last_position].schedule[days[i]].open + " Close: " + res.data[last_position].schedule[days[i]].close +"</p>")
+
+          $('#tipo-servicio').text(res.data[last_position].info.service)
+
+          if ((res.data[last_position].info.cubrebocas) == 1){
+            $('#cubrebocas').show();
+          }else {
+              $('#cubrebocas').hide();
+          }
+
+          if ((res.data[last_position].info.petfriendly) == 1){
+            $('#petfriendly').show();
+          }else {
+              $('#petfriendly').hide();
+          }
+
+          if ((res.data[last_position].info.autoservice) == 1){
+            $('#autoservicio').show();
+          }else {
+              $('#autoservicio').hide();
+          }
 
           $("#title").text(res.data[last_position].poi.title)
           $('#content-reviews').show();
@@ -487,6 +514,9 @@ map.addLayer({
           $("#title").text("")
           $('#bmodal').show();
           $('#content-reviews').hide();
+          $('#cubrebocas').hide();
+          $('#petfriendly').hide();
+          $('#autoservicio').hide();
           alert("no hay informacion del punto!");
 
 
@@ -517,7 +547,7 @@ map.addLayer({
 		const fields  = $(e.target).serializeArray()
 		const days_arrays =  fields.filter((campo) => campo.name.startsWith('schedule') ).map((campo) => campo.value)
 
-    const service_info = fields.filter((campo) => campo.name.startsWith('type-service')).map((campo) => campo.value)
+    const service_info = fields.filter((campo) => campo.name.startsWith('type_service')).map((campo) => campo.value)
     const cubrebocas = fields.filter((campo) => campo.name.startsWith('covers')).map((campo) => campo.value)
     const petfriendly = fields.filter((campo) => campo.name.startsWith('petfriendly')).map((campo) => campo.value)
     const autoservice = fields.filter((campo) => campo.name.startsWith('autoservice')).map((campo) => campo.value)
